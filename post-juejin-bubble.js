@@ -20,17 +20,15 @@ async function postBubble() {
     'Referer': 'https://juejin.cn/',
   };
 
-  // 确保 topic_ids 全是字符串
-  const topic_ids = BUBBLE_TOPIC_ID
-    ? BUBBLE_TOPIC_ID.split(',').map(id => id.trim()).filter(id => id).map(id => String(id))
-    : [];
+  // 只传字符串，不用数组
+  const topic_id = BUBBLE_TOPIC_ID.trim();
 
   const data = {
     "content": BUBBLE_CONTENT,
     "sync_to_org": false
   };
-  if (topic_ids.length > 0) {
-    data["topic_id"] = topic_ids;
+  if (topic_id) {
+    data["topic_id"] = topic_id;
   }
 
   try {
