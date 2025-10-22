@@ -2,7 +2,7 @@ name: Juejin Bubble Auto Post
 
 on:
   schedule:
-    - cron: '0 1 * * *'  # 每天1点(UTC)，即北京时间9点
+    - cron: '0 0 * * *'  # 每天1点(UTC)，即北京时间8点
   workflow_dispatch:
 
 jobs:
