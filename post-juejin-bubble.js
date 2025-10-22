@@ -30,7 +30,7 @@ async function postBubble() {
     "sync_to_feed": true
   };
   if (topic_ids.length > 0) {
-    data["topic_ids"] = topic_ids;
+    data["topic_id"] = topic_ids;
   }
 
   try {
