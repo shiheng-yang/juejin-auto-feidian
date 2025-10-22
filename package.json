@@ -1,0 +1,12 @@
+{
+  "name": "juejin-bubble-bot",
+  "version": "1.0.0",
+  "description": "自动定时发送掘金沸点的 GitHub Actions Bot",
+  "main": "post-juejin-bubble.js",
+  "scripts": {
+    "start": "node post-juejin-bubble.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
+}
