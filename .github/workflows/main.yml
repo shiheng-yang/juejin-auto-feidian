@@ -1,0 +1,27 @@
+name: Juejin Bubble Auto Post
+
+on:
+  schedule:
+    - cron: '0 1 * * *'  # 每天1点(UTC)，即北京时间9点
+  workflow_dispatch:
+
+jobs:
+  post-bubble:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+
+      - name: 设置Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 安装依赖
+        run: npm install
+
+      - name: 发送掘金沸点
+        env:
+          JUEJIN_COOKIE: ${{ secrets.JUEJIN_COOKIE }}
+          BUBBLE_CONTENT: ${{ secrets.BUBBLE_CONTENT }}
+        run: npm start
