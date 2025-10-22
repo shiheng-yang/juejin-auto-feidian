@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const JUEJIN_COOKIE = process.env.JUEJIN_COOKIE; // 从环境变量读取 Cookie
+const JUEJIN_COOKIE = process.env.JUEJIN_COOKIE;
 const BUBBLE_CONTENT = process.env.BUBBLE_CONTENT || "早安，自动发沸点测试~";
 
 if (!JUEJIN_COOKIE) {
@@ -9,7 +9,7 @@ if (!JUEJIN_COOKIE) {
 }
 
 async function postBubble() {
-  const url = 'https://api.juejin.cn/bubble/create';
+  const url = 'https://api.juejin.cn/content_api/v1/short_msg/publish';
 
   const headers = {
     'Cookie': JUEJIN_COOKIE,
@@ -21,12 +21,13 @@ async function postBubble() {
 
   const data = {
     "content": BUBBLE_CONTENT,
-    "sync_to_twitter": false
+    "sync_to_feed": true,
+    "topic_ids": []
   };
 
   try {
     const response = await axios.post(url, data, { headers });
-    if (response.data && response.data.err_msg === "success") {
+    if (response.data && response.data.err_no === 0) {
       console.log('沸点发送成功:', response.data);
     } else {
       console.error('沸点发送失败:', response.data);
