@@ -27,7 +27,7 @@ async function postBubble() {
 
   const data = {
     "content": BUBBLE_CONTENT,
-    "sync_to_feed": true
+    "sync_to_org": false
   };
   if (topic_ids.length > 0) {
     data["topic_id"] = topic_ids;
