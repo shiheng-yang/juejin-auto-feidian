@@ -2,7 +2,6 @@ const axios = require('axios');
 
 const JUEJIN_COOKIE = process.env.JUEJIN_COOKIE;
 const BUBBLE_CONTENT = process.env.BUBBLE_CONTENT || "早安，自动发沸点测试~";
-// 支持圈子ID配置，多个用逗号分隔
 const BUBBLE_TOPIC_ID = process.env.BUBBLE_TOPIC_ID || "";
 
 if (!JUEJIN_COOKIE) {
@@ -20,16 +19,19 @@ async function postBubble() {
     'Origin': 'https://juejin.cn',
     'Referer': 'https://juejin.cn/',
   };
-// 处理 topic_ids，支持单个或多个ID，且过滤空字符串
-const topic_ids = BUBBLE_TOPIC_ID
-  ? BUBBLE_TOPIC_ID.split(',').map(id => id.trim()).filter(id => id)
-  : [];
-  
+
+  // 确保 topic_ids 全是字符串
+  const topic_ids = BUBBLE_TOPIC_ID
+    ? BUBBLE_TOPIC_ID.split(',').map(id => id.trim()).filter(id => id).map(id => String(id))
+    : [];
+
   const data = {
     "content": BUBBLE_CONTENT,
-    "sync_to_org": false,
-    "topic_id": topic_ids
+    "sync_to_feed": true
   };
+  if (topic_ids.length > 0) {
+    data["topic_ids"] = topic_ids;
+  }
 
   try {
     const response = await axios.post(url, data, { headers });
