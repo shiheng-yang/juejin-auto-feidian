@@ -2,6 +2,8 @@ const axios = require('axios');
 
 const JUEJIN_COOKIE = process.env.JUEJIN_COOKIE;
 const BUBBLE_CONTENT = process.env.BUBBLE_CONTENT || "早安，自动发沸点测试~";
+// 支持圈子ID配置，多个用逗号分隔
+const BUBBLE_TOPIC_ID = process.env.BUBBLE_TOPIC_ID || "";
 
 if (!JUEJIN_COOKIE) {
   console.error('Error: JUEJIN_COOKIE is not set.');
@@ -19,10 +21,15 @@ async function postBubble() {
     'Referer': 'https://juejin.cn/',
   };
 
+  // 处理 topic_ids，支持单个或多个ID
+  const topic_ids = BUBBLE_TOPIC_ID
+    ? BUBBLE_TOPIC_ID.split(',').map(id => id.trim()).filter(Boolean)
+    : [];
+
   const data = {
     "content": BUBBLE_CONTENT,
     "sync_to_feed": true,
-    "topic_ids": []
+    "topic_ids": topic_ids
   };
 
   try {
