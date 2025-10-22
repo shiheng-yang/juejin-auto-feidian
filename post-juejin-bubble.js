@@ -20,11 +20,15 @@ async function postBubble() {
     'Origin': 'https://juejin.cn',
     'Referer': 'https://juejin.cn/',
   };
-
+// 处理 topic_ids，支持单个或多个ID，且过滤空字符串
+const topic_ids = BUBBLE_TOPIC_ID
+  ? BUBBLE_TOPIC_ID.split(',').map(id => id.trim()).filter(id => id)
+  : [];
+  
   const data = {
     "content": BUBBLE_CONTENT,
     "sync_to_org": false,
-    "topic_id": BUBBLE_TOPIC_ID
+    "topic_id": topic_ids
   };
 
   try {
