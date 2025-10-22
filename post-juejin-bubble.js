@@ -23,7 +23,7 @@ async function postBubble() {
 
   const data = {
     "content": BUBBLE_CONTENT,
-    "sync_to_feed": true,
+    "sync_to_org": false,
     "topic_id": BUBBLE_TOPIC_ID
   };
 
