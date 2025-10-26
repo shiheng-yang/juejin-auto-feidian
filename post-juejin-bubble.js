@@ -79,7 +79,7 @@ async function postComment(msg_id) {
     // 延迟2秒再评论，避免接口节流
     await new Promise(r => setTimeout(r, 2000));
     const res = await axios.post(url, data, { headers });
-
+console.log('💬 111111:', res);
     if (res.data?.err_no === 0) {
       console.log('💬 评论发送成功:', COMMENT_TEXT);
     } else {
