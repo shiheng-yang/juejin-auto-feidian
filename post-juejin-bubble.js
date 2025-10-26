@@ -64,28 +64,32 @@ async function postComment(msg_id) {
   const headers = {
     'Cookie': JUEJIN_COOKIE,
     'Content-Type': 'application/json',
-    'User-Agent': 'Mozilla/5.0',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
     'Origin': 'https://juejin.cn',
     'Referer': 'https://juejin.cn/',
   };
 
   const data = {
-    item_id: msg_id,        // 沸点 ID
-    item_type: 4,           // 4 表示沸点
+    item_id: msg_id,
+    item_type: 4,
     comment_content: COMMENT_TEXT,
   };
 
   try {
+    // 延迟2秒再评论，避免接口节流
+    await new Promise(r => setTimeout(r, 2000));
     const res = await axios.post(url, data, { headers });
-    if (res.data && res.data.err_no === 0) {
+
+    if (res.data?.err_no === 0) {
       console.log('💬 评论发送成功:', COMMENT_TEXT);
     } else {
-      console.error('❌ 评论失败:', res.data);
+      console.error('❌ 评论失败:', JSON.stringify(res.data, null, 2));
     }
   } catch (err) {
     console.error('🚨 评论异常:', err.response ? err.response.data : err.message);
   }
 }
+
 
 postBubble();
 
