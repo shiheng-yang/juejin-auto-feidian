@@ -47,6 +47,7 @@ async function postBubble() {
 
   try {
     const response = await axios.post(url, data, { headers });
+    await axios.post(url, data, { headers });
     if (response.data && response.data.err_no === 0) {
       console.log('沸点发送成功:', response.data);
     } else {
