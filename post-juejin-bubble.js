@@ -60,4 +60,6 @@ async function postBubble() {
 }
 
 postBubble();
-postBubble();
+setTimeout(()=>{
+  postBubble();
+},5000)
