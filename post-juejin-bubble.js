@@ -61,25 +61,29 @@ async function postBubble() {
 // 发表评论
 async function postComment(msg_id) {
   const url = 'https://api.juejin.cn/interact_api/v1/comment/publish';
-  const headers = {
-    'Cookie': JUEJIN_COOKIE,
-    'Content-Type': 'application/json',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
-    'Origin': 'https://juejin.cn',
-    'Referer': 'https://juejin.cn/',
-  };
+const headers = {
+  'Cookie': JUEJIN_COOKIE,
+  'Content-Type': 'application/json',
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+  'Origin': 'https://juejin.cn',
+  'Referer': 'https://juejin.cn/',
+  'Accept': 'application/json, text/plain, */*',
+  'Accept-Language': 'zh-CN,zh;q=0.9',
+  'Accept-Encoding': 'gzip, deflate, br',
+};
+
 
   const data = {
     item_id: msg_id,
     item_type: 4,
     comment_content: COMMENT_TEXT,
   };
-
+console.log(222222222222222);
   try {
     // 延迟2秒再评论，避免接口节流
     await new Promise(r => setTimeout(r, 2000));
     const res = await axios.post(url, data, { headers });
-console.log('💬 111111:', res);
+console.log('222233111111:', res);
     if (res.data?.err_no === 0) {
       console.log('💬 评论发送成功:', COMMENT_TEXT);
     } else {
