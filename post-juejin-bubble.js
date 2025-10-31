@@ -47,7 +47,7 @@ async function postBubble() {
       console.log('✅ 沸点发送成功，msg_id:', msg_id);
 
       // 发布评论
-      await postComment(msg_id);
+      // await postComment(msg_id);
     } else {
       console.error('❌ 沸点发送失败:', response.data);
       process.exit(1);
@@ -58,9 +58,11 @@ async function postBubble() {
   }
 }
 
-// 发表评论
-async function postComment(msg_id) {
-  const url = 'https://api.juejin.cn/interact_api/v1/comment/publish';
+// ==== 获取沸点列表 API ====
+const FEED_URL = 'https://api.juejin.cn/recommend_api/v1/short_msg/recommend'; 
+const COMMENT_URL = 'https://api.juejin.cn/interact_api/v1/comment/publish';
+
+// ==== 通用头 ====
 const headers = {
   'Cookie': JUEJIN_COOKIE,
   'Content-Type': 'application/json',
@@ -68,24 +70,44 @@ const headers = {
   'Origin': 'https://juejin.cn',
   'Referer': 'https://juejin.cn/',
   'Accept': 'application/json, text/plain, */*',
-  'Accept-Language': 'zh-CN,zh;q=0.9',
-  'Accept-Encoding': 'gzip, deflate, br',
+  'Accept-Language': 'zh-CN,zh;q=0.9'
 };
 
+// ==== 获取主页沸点列表 ====
+async function getFirstMsgId() {
+  try {
+    const res = await axios.post(FEED_URL, { id_type: 4, sort_type: 200, cursor: "0", limit: 20 }, { headers });
+    if (res.data.err_no === 0) {
+      const list = res.data.data;
+      if (list && list.length > 0) {
+        const first = list[0].msg_id;
+        console.log('✅ 获取第一条沸点 msg_id:', first);
+        return first;
+      } else {
+        console.error('⚠️ 没有获取到沸点列表');
+      }
+    } else {
+      console.error('❌ 获取沸点失败:', res.data);
+    }
+  } catch (err) {
+    console.error('🚨 请求沸点列表出错:', err.response ? err.response.data : err.message);
+  }
+  return null;
+}
 
+// ==== 评论函数 ====
+async function postComment(msg_id) {
   const data = {
     item_id: msg_id,
     item_type: 4,
     comment_content: COMMENT_TEXT,
   };
-console.log(222222222222222);
+
   try {
-    // 延迟2秒再评论，避免接口节流
-    await new Promise(r => setTimeout(r, 2000));
-    const res = await axios.post(url, data, { headers });
-console.log('222233111111:', res);
+    await new Promise(r => setTimeout(r, 2000)); // 延迟防风控
+    const res = await axios.post(COMMENT_URL, data, { headers });
     if (res.data?.err_no === 0) {
-      console.log('💬 评论发送成功:', COMMENT_TEXT);
+      console.log('💬 评论成功:', COMMENT_TEXT);
     } else {
       console.error('❌ 评论失败:', JSON.stringify(res.data, null, 2));
     }
@@ -93,6 +115,14 @@ console.log('222233111111:', res);
     console.error('🚨 评论异常:', err.response ? err.response.data : err.message);
   }
 }
+
+// ==== 主流程 ====
+(async function main() {
+  const msg_id = await getFirstMsgId();
+  if (msg_id) {
+    await postComment(msg_id);
+  }
+})();
 
 
 postBubble();
