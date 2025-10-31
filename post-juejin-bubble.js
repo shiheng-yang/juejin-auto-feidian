@@ -47,7 +47,7 @@ async function postBubble() {
       console.log('✅ 沸点发送成功，msg_id:', msg_id);
 
       // 发布评论
-      // await postComment(msg_id);
+      await postComment(msg_id);
     } else {
       console.error('❌ 沸点发送失败:', response.data);
       process.exit(1);
