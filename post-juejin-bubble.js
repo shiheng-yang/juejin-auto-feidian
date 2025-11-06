@@ -44,18 +44,8 @@ async function postBubble(content) {
     topic_id: BUBBLE_TOPIC_ID,
     mentions:[]
   };
-  const params = {
-    aid: '2608',
-    uuid: '6979823742491395614',
-    spider: '0'
-  };
 
   try {
-   const fullUrl = `${url}?${new URLSearchParams(params).toString()}`;
-    console.log('📤 请求URL:', fullUrl);
-    
-
-    
     const response = await axios.post(url, data, { headers });
     if (response.data && response.data.err_no === 0) {
       const msg_id = response.data.data.msg_id;
