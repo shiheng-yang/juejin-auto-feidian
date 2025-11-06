@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const JUEJIN_COOKIE = process.env.JUEJIN_COOKIE;
-const BUBBLE_TOPIC_ID = process.env.BUBBLE_TOPIC_ID || ""; // 圈子id
+const BUBBLE_TOPIC_ID = "6824710203301167112"; // 圈子id
 const COMMENT_TEXT = process.env.COMMENT_TEXT || "马到成功！🐎"; // 评论内容
 
 if (!JUEJIN_COOKIE) {
@@ -41,10 +41,21 @@ async function postBubble(content) {
   const data = {
     content: content,
     sync_to_org: false,
+    topic_id: BUBBLE_TOPIC_ID,
+    mentions:[]
   };
-  if (BUBBLE_TOPIC_ID.trim()) data.topic_id = BUBBLE_TOPIC_ID.trim();
+  const params = {
+    aid: '2608',
+    uuid: '6979823742491395614',
+    spider: '0'
+  };
 
   try {
+   const fullUrl = `${url}?${new URLSearchParams(params).toString()}`;
+    console.log('📤 请求URL:', fullUrl);
+    
+
+    
     const response = await axios.post(url, data, { headers });
     if (response.data && response.data.err_no === 0) {
       const msg_id = response.data.data.msg_id;
