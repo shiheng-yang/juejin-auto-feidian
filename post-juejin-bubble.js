@@ -2,7 +2,7 @@ const axios = require('axios');
 
 const JUEJIN_COOKIE = process.env.JUEJIN_COOKIE;
 const BUBBLE_TOPIC_ID = "6824710203301167112"; // 圈子id
-const COMMENT_TEXT = process.env.COMMENT_TEXT || "马到成功！🐎"; // 评论内容
+const COMMENT_TEXT = "马到成功！🐎"; // 评论内容
 
 if (!JUEJIN_COOKIE) {
   console.error('Error: JUEJIN_COOKIE is not set.');
