@@ -42,9 +42,9 @@ async function postBubble(content) {
     content: content,
     sync_to_org: false,
     topic_id: BUBBLE_TOPIC_ID,
-    mentions:[]
+    
   };
-
+ // mentions:[]
   try {
     const response = await axios.post(url, data, { headers });
     if (response.data && response.data.err_no === 0) {
