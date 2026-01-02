@@ -18,10 +18,10 @@ function getDaysToNextHorseYear() {
   return days;
 }
 
-// 计算距离2026年元旦还有多少天
+// 计算距离2026年清明还有多少天
 function getDaysTo2026NewYear() {
   const now = new Date();
-  const newYear2026 = new Date('2026-01-01T00:00:00+08:00');
+  const newYear2026 = new Date('2026-04-04T00:00:00+08:00');
   const msPerDay = 1000 * 60 * 60 * 24;
   const days = Math.ceil((newYear2026.getTime() - now.getTime()) / msPerDay);
   return days;
