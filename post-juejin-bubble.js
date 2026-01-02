@@ -110,7 +110,7 @@ async function main() {
     
     // 第二条沸点：距离2026年元旦倒计时
     const newYearDays = getDaysTo2026NewYear();
-    const newYearContent = `距离元旦还有${newYearDays}天! 祝大家新年快乐 ! ! !`;
+    const newYearContent = `距离清明还有${newYearDays}天! 祝大家节日快乐 ! ! !`;
     
     console.log(`📅 发布第二条沸点：${newYearContent}`);
     await postBubble(newYearContent);
