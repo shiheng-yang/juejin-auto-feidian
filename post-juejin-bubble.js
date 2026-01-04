@@ -109,11 +109,14 @@ async function main() {
     await new Promise(resolve => setTimeout(resolve, 10000));
     
     // 第二条沸点：距离2026年元旦倒计时
-    const newYearDays = getDaysTo2026NewYear();
-    const newYearContent = `距离清明还有${newYearDays}天! 祝大家节日快乐 ! ! !`;
+    // const newYearDays = getDaysTo2026NewYear();
+    // const newYearContent = `距离清明还有${newYearDays}天! 祝大家节日快乐 ! ! !`;
+
+  const horseYearDays = getDaysToNextHorseYear();
+  const horseYearContent = `距离马年还有${horseYearDays}天! 祝大家马年大吉 ! ! !`;
     
-    console.log(`📅 发布第二条沸点：${newYearContent}`);
-    await postBubble(newYearContent);
+    console.log(`📅 发布第二条沸点：${horseYearContent}`);
+    await postBubble(horseYearContent);
   }
 }
 
